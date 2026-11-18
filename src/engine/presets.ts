@@ -1,0 +1,129 @@
+/**
+ * DhakaiyaLang Preset Code Examples
+ */
+
+export interface Preset {
+  id: string;
+  name: string;
+  description: string;
+  code: string;
+}
+
+export const PRESETS: Preset[] = [
+  {
+    id: 'kacchi',
+    name: '🍛 হাজী কাচ্চির বিল হিসাব (Variables & Math)',
+    description: 'হিসাব-নিকাশ এবং ভ্যারিয়েবল ডিক্লেয়ারেশন',
+    code: `bismillah
+  // 🍛 নাজিরাবাজারের হাজী কাচ্চির বিল হিসাব
+  rakh plate_sonkha = 3;
+  rakh plate_dam = 280;
+  rakh borhani_dam = 60;
+  rakh extra_alubukhara = 30;
+
+  rakh mot_bill = (plate_sonkha * plate_dam) + borhani_dam + extra_alubukhara;
+
+  chilla "হাজী বিরিয়ানির ক্যাশ মেমো:";
+  chilla "প্লেট সংখ্যা:";
+  chilla plate_sonkha;
+  chilla "মোট বিল হইলো (টাকা):";
+  chilla mot_bill;
+
+  jodi (mot_bill > 800) {
+    chilla "মামা স্পেশাল ডিসকাউন্ট পাইবা!";
+  } naile {
+    chilla "পরের বার আইসা ডিসকাউন্ট নিও!";
+  }
+khatam`
+  },
+  {
+    id: 'market',
+    name: '🏪 শাঁখারীবাজারের দরদাম (If-Else Condition)',
+    description: 'শর্ত সাপেক্ষে দরদাম ও বাজার সওদা',
+    code: `bismillah
+  // 🏪 শাঁখারীবাজারের সওদা ও দরদাম
+  rakh pocket_taka = 750;
+  rakh dokandar_dam = 900;
+  rakh discount = 180;
+
+  rakh asol_dam = dokandar_dam - discount;
+
+  chilla "দোকানদার দাম চাইছে:";
+  chilla dokandar_dam;
+  chilla "দরদাম কইরা ফাইনাল দাম:";
+  chilla asol_dam;
+
+  jodi (pocket_taka >= asol_dam) {
+    chilla "আরে মামা! টেকাটুকা তো ভালোই আছে!";
+    chilla "প্যাকেট বাঁধেন, মাল নিয়া যামু!";
+  } naile {
+    chilla "মামা অবস্থা টাইট, বাকিতে খাওয়ার চিন্তা বাদ দাও!";
+  }
+khatam`
+  },
+  {
+    id: 'chakkor',
+    name: '🔄 চকবাজারের চাক্কর কাউন্টডাউন (Loop & Break)',
+    description: 'চকবাজার প্রদক্ষিণ এবং শর্ত দিয়ে লুপ থামানো',
+    code: `bismillah
+  // 🔄 চকবাজারের চাক্কর কাউন্টডাউন ও থামা (Break)
+  rakh gunti = 6;
+
+  chilla "চকবাজারে হাঁটা শুরু করলাম:";
+  chakkor (gunti > 0) {
+    chilla gunti;
+    jodi (gunti == 3) {
+      chilla "৩ নাম্বারে আইসা টায়ার পাংচার! মামা থামো!";
+      thamo;
+    }
+    gunti = gunti - 1;
+  }
+  chilla "চকবাজার প্রদক্ষিণ শেষ মামা!";
+khatam`
+  },
+  {
+    id: 'kaam',
+    name: '🧑‍🍳 নাজিরাবাজারের স্পেশাল ফাংশন (Function & Return)',
+    description: 'ফাংশন ও মান রিটার্ন করার অ্যালগরিদম',
+    code: `bismillah
+  // 🧑‍🍳 নাজিরাবাজারের স্পেশাল বাবুর্চির ফাংশন (kaam & ferot)
+  kaam hishab_khoroch(plate_sonkha, plate_rate) {
+    rakh vat = 50;
+    ferot (plate_sonkha * plate_rate) + vat;
+  }
+
+  chilla "বাবুর্চির হিসাব শুরু:";
+  rakh total = hishab_khoroch(3, 280);
+  chilla total;
+  chilla "বিল ক্লিয়ার মামা!";
+khatam`
+  },
+  {
+    id: 'dekchi',
+    name: '🍲 পুরান ঢাকার মেহমানদারি মেনু (Arrays / ডেকচি)',
+    description: 'অ্যারে তালিকা ও ইনডেক্স থেকে মান পড়া',
+    code: `bismillah
+  // 🍲 পুরান ঢাকার মেহমানদারি মেনু (অ্যারে / ডেকচি)
+  rakh menu = ["কাচ্চি বিরিয়ানি", "মোরগ পোলাও", "স্পেশাল বোরহানি", "জাফরানি বাকরখানি"];
+
+  chilla "আমাদের আজকের মেনুর আইটেম:";
+  chilla menu;
+
+  chilla "১ নাম্বার পছন্দের খাবার:";
+  chilla menu[0];
+
+  chilla "ডেজার্ট স্পেশাল:";
+  chilla menu[3];
+khatam`
+  },
+  {
+    id: 'error',
+    name: '⚠️ ভুল কোড ও পুরান ঢাকার এরর মেসেজ (Debugging)',
+    description: 'কম্পাইলারের ফ্রেন্ডলি এরর হ্যান্ডলিং টেস্ট',
+    code: `bismillah
+  // ⚠️ ভুল কোডের নমুনা (কম্পাইলার ডিবাগিং টেস্ট)
+  rakh dam = 500
+  chilla "সেমিকোলন দেই নাই মামা!"
+khatam`
+  }
+];

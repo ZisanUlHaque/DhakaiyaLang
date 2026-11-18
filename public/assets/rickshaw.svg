@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 350" width="100%" height="100%">
+  <defs>
+    <linearGradient id="hoodGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF3366" />
+      <stop offset="50%" stop-color="#FFCC00" />
+      <stop offset="100%" stop-color="#00CC99" />
+    </linearGradient>
+    <linearGradient id="metalGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8892B0" />
+      <stop offset="50%" stop-color="#CCD6F6" />
+      <stop offset="100%" stop-color="#495670" />
+    </linearGradient>
+    <radialGradient id="wheelGrad">
+      <stop offset="70%" stop-color="#1A1E2E" />
+      <stop offset="85%" stop-color="#FFCC00" />
+      <stop offset="100%" stop-color="#FF3366" />
+    </radialGradient>
+  </defs>
+
+  <!-- Rickshaw Hood Frame -->
+  <path d="M 80,180 Q 90,50 200,40 Q 300,45 310,140 L 320,200 L 70,200 Z" fill="url(#hoodGrad)" stroke="#FFD700" stroke-width="4" />
+  
+  <!-- Hood Ribs / Ornate Folding Panels -->
+  <path d="M 100,180 Q 110,65 200,55 Q 285,60 295,145" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-dasharray="6,4" />
+  <path d="M 130,185 Q 140,85 200,75 Q 260,80 270,155" fill="none" stroke="#FFD700" stroke-width="3" />
+  
+  <!-- Folk Art Lotus & Peacocks on Hood Back -->
+  <circle cx="200" cy="110" r="35" fill="#12141F" stroke="#FFD700" stroke-width="2.5" />
+  <path d="M 200,85 C 190,98 190,120 200,135 C 210,120 210,98 200,85 Z" fill="#FF3366" />
+  <path d="M 180,110 C 190,105 210,105 220,110 C 210,120 190,120 180,110 Z" fill="#FFCC00" />
+  <circle cx="200" cy="110" r="8" fill="#00CC99" />
+
+  <!-- Passenger Seat Cushion -->
+  <rect x="75" y="180" width="235" height="35" rx="10" fill="#D94819" stroke="#FFD700" stroke-width="2" />
+  <line x1="90" y1="180" x2="90" y2="215" stroke="#FFCC00" stroke-width="2" />
+  <line x1="150" y1="180" x2="150" y2="215" stroke="#FFCC00" stroke-width="2" />
+  <line x1="210" y1="180" x2="210" y2="215" stroke="#FFCC00" stroke-width="2" />
+  <line x1="270" y1="180" x2="270" y2="215" stroke="#FFCC00" stroke-width="2" />
+
+  <!-- Rickshaw Tin Plate Art (ঝাল ফ্রাই / পুরান ঢাকা) -->
+  <rect x="120" y="215" width="140" height="40" rx="6" fill="#00B4D8" stroke="#FFD700" stroke-width="2" />
+  <text x="190" y="240" font-family="'Anek Bangla', sans-serif" font-weight="bold" font-size="14" fill="#FFFFFF" text-anchor="middle">পুরান ঢাকা স্পেশাল</text>
+
+  <!-- Rickshaw Main Chassis Tubes -->
+  <line x1="180" y1="240" x2="380" y2="240" stroke="url(#metalGrad)" stroke-width="8" stroke-linecap="round" />
+  <line x1="280" y1="240" x2="370" y2="170" stroke="url(#metalGrad)" stroke-width="6" />
+  <line x1="370" y1="170" x2="430" y2="260" stroke="url(#metalGrad)" stroke-width="6" />
+  
+  <!-- Driver Seat (Poddle / Gaddi) -->
+  <path d="M 350,170 Q 375,160 400,170 Q 380,185 350,170 Z" fill="#D94819" stroke="#FFD700" stroke-width="2" />
+  
+  <!-- Handlebars & Bell -->
+  <path d="M 410,130 L 415,190" stroke="url(#metalGrad)" stroke-width="6" stroke-linecap="round" />
+  <path d="M 390,130 L 435,130" stroke="#FFD700" stroke-width="6" stroke-linecap="round" />
+  <circle cx="430" cy="120" r="10" fill="#FFD700" stroke="#D94819" stroke-width="2" /> <!-- Rickshaw Bell -->
+
+  <!-- Back Left Wheel -->
+  <circle cx="110" cy="270" r="55" fill="none" stroke="url(#wheelGrad)" stroke-width="12" />
+  <circle cx="110" cy="270" r="12" fill="#FFD700" />
+  <!-- Spokes -->
+  <g stroke="#CCD6F6" stroke-width="1.5" opacity="0.7">
+    <line x1="110" y1="215" x2="110" y2="325" />
+    <line x1="55" y1="270" x2="165" y2="270" />
+    <line x1="71" y1="231" x2="149" y2="309" />
+    <line x1="71" y1="309" x2="149" y2="231" />
+  </g>
+
+  <!-- Front Wheel -->
+  <circle cx="430" cy="270" r="55" fill="none" stroke="url(#wheelGrad)" stroke-width="12" />
+  <circle cx="430" cy="270" r="12" fill="#FFD700" />
+  <!-- Front Spokes -->
+  <g stroke="#CCD6F6" stroke-width="1.5" opacity="0.7">
+    <line x1="430" y1="215" x2="430" y2="325" />
+    <line x1="375" y1="270" x2="485" y2="270" />
+    <line x1="391" y1="231" x2="469" y2="309" />
+    <line x1="391" y1="309" x2="469" y2="231" />
+  </g>
+</svg>

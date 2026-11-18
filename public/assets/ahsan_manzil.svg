@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 280" width="100%" height="100%">
+  <defs>
+    <linearGradient id="palaceGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FF6584" />
+      <stop offset="60%" stop-color="#E24B6A" />
+      <stop offset="100%" stop-color="#9E203C" />
+    </linearGradient>
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1A1C29" />
+      <stop offset="100%" stop-color="#0A0B10" />
+    </linearGradient>
+  </defs>
+
+  <!-- Sky Backing -->
+  <rect width="500" height="280" fill="url(#skyGrad)" rx="16" />
+
+  <!-- Stars / Night Sky -->
+  <circle cx="80" cy="40" r="1.5" fill="#FFD700" opacity="0.8" />
+  <circle cx="150" cy="25" r="1.2" fill="#FFFFFF" opacity="0.7" />
+  <circle cx="340" cy="35" r="1.8" fill="#FFD700" opacity="0.9" />
+  <circle cx="430" cy="50" r="1.2" fill="#FFFFFF" opacity="0.6" />
+  <path d="M 410,25 A 15,15 0 0,0 425,40 A 13,13 0 0,1 410,25 Z" fill="#FFEAA7" opacity="0.85" /> <!-- Crescent Moon -->
+
+  <!-- Ahsan Manzil Main Center Dome -->
+  <path d="M 220,110 C 220,55 280,55 280,110 Z" fill="url(#palaceGrad)" stroke="#FFD700" stroke-width="2.5" />
+  <!-- Dome Finial Spire -->
+  <line x1="250" y1="55" x2="250" y2="28" stroke="#FFD700" stroke-width="3" />
+  <circle cx="250" cy="26" r="4.5" fill="#FFD700" />
+
+  <!-- Dome Drum with Arched Windows -->
+  <rect x="220" y="110" width="60" height="25" fill="#9E203C" stroke="#FFD700" stroke-width="1.5" />
+  <path d="M 228,125 A 4,6 0 0,1 236,125" stroke="#FFEAA7" stroke-width="2" fill="none" />
+  <path d="M 246,125 A 4,6 0 0,1 254,125" stroke="#FFEAA7" stroke-width="2" fill="none" />
+  <path d="M 264,125 A 4,6 0 0,1 272,125" stroke="#FFEAA7" stroke-width="2" fill="none" />
+
+  <!-- Center Grand Portico / Pediment -->
+  <polygon points="210,135 250,118 290,135" fill="#FF6584" stroke="#FFD700" stroke-width="2" />
+
+  <!-- Main Palace 2-Story Body -->
+  <rect x="50" y="135" width="400" height="90" fill="url(#palaceGrad)" stroke="#FFD700" stroke-width="2.5" />
+
+  <!-- Classical Corinthian Columns -->
+  <g stroke="#FFD700" stroke-width="4" stroke-linecap="square">
+    <line x1="70" y1="140" x2="70" y2="225" />
+    <line x1="110" y1="140" x2="110" y2="225" />
+    <line x1="150" y1="140" x2="150" y2="225" />
+    <line x1="190" y1="140" x2="190" y2="225" />
+    <!-- Center Portico Columns -->
+    <line x1="225" y1="135" x2="225" y2="225" stroke="#FFFFFF" stroke-width="5" />
+    <line x1="242" y1="135" x2="242" y2="225" stroke="#FFFFFF" stroke-width="5" />
+    <line x1="258" y1="135" x2="258" y2="225" stroke="#FFFFFF" stroke-width="5" />
+    <line x1="275" y1="135" x2="275" y2="225" stroke="#FFFFFF" stroke-width="5" />
+    <!-- Right Wing Columns -->
+    <line x1="310" y1="140" x2="310" y2="225" />
+    <line x1="350" y1="140" x2="350" y2="225" />
+    <line x1="390" y1="140" x2="390" y2="225" />
+    <line x1="430" y1="140" x2="430" y2="225" />
+  </g>
+
+  <!-- Arched French Windows Upper Floor -->
+  <g fill="#1A1C29" stroke="#FFD700" stroke-width="1.5">
+    <path d="M 85,170 A 8,12 0 0,1 97,170 L 97,180 L 85,180 Z" />
+    <path d="M 125,170 A 8,12 0 0,1 137,170 L 137,180 L 125,180 Z" />
+    <path d="M 165,170 A 8,12 0 0,1 177,170 L 177,180 L 165,180 Z" />
+    <path d="M 325,170 A 8,12 0 0,1 337,170 L 337,180 L 325,180 Z" />
+    <path d="M 365,170 A 8,12 0 0,1 377,170 L 377,180 L 365,180 Z" />
+    <path d="M 405,170 A 8,12 0 0,1 417,170 L 417,180 L 405,180 Z" />
+  </g>
+
+  <!-- Grand Monumental Staircase (Flight of stairs) -->
+  <polygon points="190,225 310,225 340,265 160,265" fill="#7A152C" stroke="#FFD700" stroke-width="2" />
+  <line x1="180" y1="235" x2="320" y2="235" stroke="#FFD700" stroke-width="1.5" />
+  <line x1="170" y1="245" x2="330" y2="245" stroke="#FFD700" stroke-width="1.5" />
+  <line x1="160" y1="255" x2="340" y2="255" stroke="#FFD700" stroke-width="1.5" />
+
+  <!-- Buriganga River Fore-ground Reflection / Grass -->
+  <rect x="0" y="265" width="500" height="15" fill="#00B4D8" opacity="0.6" />
+</svg>

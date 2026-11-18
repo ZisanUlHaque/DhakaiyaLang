@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #08090E;
+    --foreground: #F8FAFC;
+  }
+  body {
+    background-color: #08090E;
+    color: #F8FAFC;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
+
+/* Rickshaw Folk Geometric Top Border */
+.rickshaw-pattern {
+  background-image: repeating-linear-gradient(45deg, 
+    #D94819 0px, #D94819 14px, 
+    #FFD700 14px, #FFD700 28px, 
+    #10B981 28px, #10B981 42px, 
+    #EC4899 42px, #EC4899 56px,
+    #06B6D4 56px, #06B6D4 70px
+  );
+  height: 6px;
+}
+
+/* Hero Background with User-provided Authentic Puran Dhaka Image */
+.hero-bg {
+  position: relative;
+  background-image: linear-gradient(180deg, rgba(8, 9, 14, 0.88) 0%, rgba(8, 9, 14, 0.72) 40%, rgba(8, 9, 14, 0.95) 85%, #08090E 100%),
+                    url('https://images.unsplash.com/photo-1692599338360-2ed390c060d9?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Terminal Section Background (Hero-like Atmosphere with Puran Dhaka Visuals & Heritage) */
+.terminal-bg {
+  position: relative;
+  background-image: linear-gradient(180deg, #08090E 0%, rgba(13, 17, 28, 0.90) 20%, rgba(10, 13, 20, 0.93) 85%, #08090E 100%),
+                    url('https://images.unsplash.com/photo-1692599338360-2ed390c060d9?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Technical Blueprint / Grid Paper Background for Documentation Section */
+.grid-paper-bg {
+  background-color: #F8F6F1;
+  background-image: url('/assets/grid_bg.png');
+  background-repeat: repeat;
+  background-size: 512px auto;
+}
+
+.glow-orange {
+  box-shadow: 0 0 45px -5px rgba(217, 72, 25, 0.5);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #08090E;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #252B3E;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #D94819;
+}

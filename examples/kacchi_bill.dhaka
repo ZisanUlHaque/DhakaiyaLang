@@ -1,0 +1,16 @@
+bismillah
+  // পুরান ঢাকার বিখ্যাত কাচ্চির বিল হিসাব
+  rakh plate = 4;
+  rakh dam = 250;
+  rakh borhani = 60;
+  rakh mot_bill = (plate * dam) + borhani;
+
+  chilla "🍛 কাচ্চির মোট বিল:";
+  chilla mot_bill;
+
+  jodi (mot_bill > 1000) {
+    chilla "মামা বাজেট বেশি! ক্যাশমেমো দেইখা ডিসকাউন্ট চান!";
+  } naile {
+    chilla "বাজেটের মধ্যেই আছে মামা, শান্তিতে খান!";
+  }
+khatam

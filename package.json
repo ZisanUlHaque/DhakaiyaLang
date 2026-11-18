@@ -1,0 +1,28 @@
+{
+  "name": "dhakaiyalang",
+  "version": "1.0.0",
+  "description": "DhakaiyaLang (পুরান ঢাকা) - A dialect-based educational programming language for Compiler Design Lab",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test": "node runner.js",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "lucide-react": "^0.363.0",
+    "next": "^14.2.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.1",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3",
+    "typescript": "^5.4.5"
+  }
+}

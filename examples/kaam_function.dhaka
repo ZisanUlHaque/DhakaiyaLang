@@ -1,0 +1,12 @@
+bismillah
+  // 🧑‍🍳 নাজিরাবাজারের বাবুর্চির স্পেশাল ফাংশন (kaam & ferot)
+  kaam hishab_khoroch(plate_sonkha, plate_rate) {
+    rakh vat = 50;
+    ferot (plate_sonkha * plate_rate) + vat;
+  }
+
+  chilla "বাবুর্চির হিসাব শুরু:";
+  rakh total = hishab_khoroch(3, 280);
+  chilla total;
+  chilla "বিল ক্লিয়ার মামা!";
+khatam

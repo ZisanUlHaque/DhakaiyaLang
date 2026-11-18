@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 280" width="100%" height="100%">
+  <defs>
+    <linearGradient id="fortGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#C05621" />
+      <stop offset="50%" stop-color="#9C4221" />
+      <stop offset="100%" stop-color="#652B19" />
+    </linearGradient>
+  </defs>
+
+  <!-- Sky Backing -->
+  <rect width="500" height="280" fill="#0E1017" rx="16" />
+
+  <!-- Fort Gateway Body -->
+  <rect x="120" y="70" width="260" height="170" fill="url(#fortGrad)" stroke="#FFD700" stroke-width="2" />
+
+  <!-- Octagonal Corner Minarets / Towers -->
+  <!-- Left Minaret -->
+  <rect x="85" y="45" width="45" height="195" fill="#7B341E" stroke="#FFD700" stroke-width="2" />
+  <polygon points="80,45 107,15 135,45" fill="#D69E2E" stroke="#FFD700" stroke-width="1.5" /> <!-- Chhatri Dome -->
+  <line x1="107" y1="15" x2="107" y2="5" stroke="#FFD700" stroke-width="2" />
+
+  <!-- Right Minaret -->
+  <rect x="370" y="45" width="45" height="195" fill="#7B341E" stroke="#FFD700" stroke-width="2" />
+  <polygon points="365,45 392,15 420,45" fill="#D69E2E" stroke="#FFD700" stroke-width="1.5" />
+  <line x1="392" y1="15" x2="392" y2="5" stroke="#FFD700" stroke-width="2" />
+
+  <!-- Center Grand Iwan Arch (Mughal Pointed Archway) -->
+  <path d="M 180,240 L 180,140 Q 250,90 320,140 L 320,240 Z" fill="#12141F" stroke="#FFD700" stroke-width="3" />
+  
+  <!-- Jali / Lattice & Inner Arch -->
+  <path d="M 200,240 L 200,160 Q 250,125 300,160 L 300,240 Z" fill="#0A0B10" stroke="#E2E8F0" stroke-width="1.5" stroke-dasharray="4,3" />
+
+  <!-- Battlements / Merlons along roof -->
+  <g fill="#D69E2E" stroke="#FFD700" stroke-width="1">
+    <rect x="135" y="60" width="16" height="10" />
+    <rect x="165" y="60" width="16" height="10" />
+    <rect x="195" y="60" width="16" height="10" />
+    <rect x="225" y="60" width="16" height="10" />
+    <rect x="255" y="60" width="16" height="10" />
+    <rect x="285" y="60" width="16" height="10" />
+    <rect x="315" y="60" width="16" height="10" />
+    <rect x="345" y="60" width="16" height="10" />
+  </g>
+
+  <!-- Ground Stone Plinth -->
+  <rect x="50" y="240" width="400" height="25" fill="#38A169" opacity="0.8" rx="4" />
+</svg>

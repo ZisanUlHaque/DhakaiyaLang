@@ -1,0 +1,11 @@
+bismillah
+  // চকবাজারের চাক্কর (While Loop) ও কাউন্টডাউন
+  rakh gunti = 5;
+
+  chilla "চকবাজারে হাঁটা শুরু:";
+  chakkor (gunti > 0) {
+    chilla gunti;
+    gunti = gunti - 1;
+  }
+  chilla "চকবাজার প্রদক্ষিণ শেষ মামা!";
+khatam
