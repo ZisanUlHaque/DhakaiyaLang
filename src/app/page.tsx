@@ -228,14 +228,6 @@ export default function Home() {
 
       {/* ================= SECTION 1: HERO SECTION ================= */}
       <section id="hero" className="hero-bg border-b border-[#242B42]/70 py-16 lg:py-24 px-4 lg:px-8 relative overflow-hidden">
-        
-        {/* Heritage Vector Artwork Layer */}
-        <div className="absolute inset-0 opacity-10 pointer-events-none flex justify-between items-end px-4">
-          <img src="/assets/lalbagh.svg" alt="Lalbagh Fort" className="w-80 h-auto" />
-          <img src="/assets/ahsan_manzil.svg" alt="Ahsan Manzil" className="w-96 h-auto hidden md:block" />
-          <img src="/assets/rickshaw.svg" alt="Rickshaw" className="w-80 h-auto" />
-        </div>
-
         <div className="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           
           {/* Left: Headline & Story */}
@@ -255,18 +247,6 @@ export default function Home() {
               <strong className="text-white">DhakaiyaLang</strong> হলো পুরান ঢাকার ৪০০ বছরের মুখের ভাষার রসে ভরপুর একটি খেলনা প্রোগ্রামিং ভাষা। নাজিরাবাজারের বিরিয়ানি থেকে শাঁখারীবাজারের দরদাম—সবকিছু এখন কোডের লাইনে লাইনে!
             </p>
 
-            {/* About Project Box */}
-            <div className="p-4 rounded-2xl bg-[#10131E]/90 border border-[#242B42] text-xs space-y-2">
-              <div className="flex items-center justify-between font-bold text-white">
-                <span className="flex items-center gap-1.5 text-[#F59E0B]">
-                  <span>🏛️</span> CSE 3202: Compiler Design Sessional প্রজেক্ট
-                </span>
-                <span className="text-[#10B981] font-mono">100% Client-Side Engine</span>
-              </div>
-              <p className="text-[#94A3B8] leading-relaxed">
-                এই কম্পাইলারটিতে ব্যবহৃত হয়েছে <strong className="text-white">Lexer (টোকেনাইজার)</strong>, <strong className="text-white">Recursive-Descent Parser</strong>, <strong className="text-white">AST জেনারেটর</strong>, <strong className="text-white">V8 JavaScript Transpiler</strong> এবং <strong className="text-white">লেক্সিক্যাল স্কোপিং সিম্বল টেবিল</strong>।
-              </p>
-            </div>
 
             {/* CTA Buttons */}
             <div className="flex items-center gap-3 pt-2 flex-wrap">
@@ -275,21 +255,20 @@ export default function Home() {
                 className="px-6 py-3 rounded-2xl font-black text-sm bg-gradient-to-r from-[#D94819] via-[#F59E0B] to-[#FFD700] hover:brightness-110 text-black shadow-xl shadow-[#D94819]/30 transition-all flex items-center gap-2"
               >
                 <span>টার্মিনালে কোড চালান</span>
-                <span>🚀</span>
               </a>
 
               <a
                 href="#docs"
                 className="px-6 py-3 rounded-2xl font-bold text-sm bg-[#171B2A] hover:bg-[#242B42] border border-[#242B42] text-white transition-all flex items-center gap-2"
               >
-                <span>📖 সম্পূর্ণ ডকুমেন্টেশন</span>
+                <span>সম্পূর্ণ ডকুমেন্টেশন</span>
               </a>
             </div>
 
             <div className="flex items-center gap-6 text-xs text-[#94A3B8] pt-2">
-              <span className="flex items-center gap-1.5"><span className="text-[#10B981] font-bold">✓</span> নোড/সার্ভার ডিপেন্ডেন্সি নাই</span>
-              <span className="flex items-center gap-1.5"><span className="text-[#10B981] font-bold">✓</span> AST পার্স ট্রি ভিউয়ার</span>
-              <span className="flex items-center gap-1.5"><span className="text-[#10B981] font-bold">✓</span> লাইভ মেমরি সিম্বল টেবিল</span>
+              <span className="flex items-center gap-1.5">নোড/সার্ভার ডিপেন্ডেন্সি নাই</span>
+              <span className="flex items-center gap-1.5">AST পার্স ট্রি ভিউয়ার</span>
+              <span className="flex items-center gap-1.5">লাইভ মেমরি সিম্বল টেবিল</span>
             </div>
           </div>
 
@@ -352,8 +331,7 @@ export default function Home() {
           <div className="flex flex-wrap items-center justify-between gap-4 pb-2 border-b border-[#242B42]/70">
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-xl">📟</span>
-                <h2 className="text-2xl font-black text-white">সেকশন ২: DhakaiyaLang টার্মিনাল ও লাইভ এডিটর</h2>
+                <h2 className="text-2xl font-black text-white">DhakaiyaLang টার্মিনাল ও লাইভ এডিটর</h2>
               </div>
               <p className="text-xs text-[#94A3B8] font-medium mt-0.5">
                 কোড লিখুন, টোকেন স্ট্রিম ও পার্স ট্রি দেখুন এবং ব্রাউজারে ইনস্ট্যান্ট আউটপুট উপভোগ করুন।
