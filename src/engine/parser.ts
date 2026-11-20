@@ -55,6 +55,23 @@ export class Parser {
     throw new Error(`[Syntax Error] ${errorMessage} (পাইলাম '${token.value}' at Line ${token.line}, Col ${token.column})`);
   }
 
+  consumeSemicolon(errorMessage: string): void {
+    if (this.match(TokenType.SEMICOLON)) {
+      return;
+    }
+    const prev = this.tokens[this.cursor - 1];
+    const current = this.peek();
+    if (
+      current.type === TokenType.PROGRAM_END ||
+      current.type === TokenType.RBRACE ||
+      current.type === TokenType.EOF ||
+      (prev && current && current.line > prev.line)
+    ) {
+      return;
+    }
+    throw new Error(`[Syntax Error] ${errorMessage} (পাইলাম '${current.value}' at Line ${current.line}, Col ${current.column})`);
+  }
+
   parse(): ASTNode {
     this.consume(TokenType.PROGRAM_START, "আরে মামা! প্রোগ্রাম তো 'bismillah' দিয়া শুরু করবা!");
 
@@ -75,6 +92,18 @@ export class Parser {
     if (this.match(TokenType.VAR)) {
       return this.varDeclaration();
     }
+    if (this.match(TokenType.FUNCTION)) {
+      return this.functionDeclaration();
+    }
+    if (this.match(TokenType.RETURN)) {
+      return this.returnStatement();
+    }
+    if (this.match(TokenType.BREAK)) {
+      return this.breakStatement();
+    }
+    if (this.match(TokenType.CONTINUE)) {
+      return this.continueStatement();
+    }
     if (this.match(TokenType.PRINT)) {
       return this.printStatement();
     }
@@ -90,6 +119,49 @@ export class Parser {
     return this.expressionOrAssignmentStatement();
   }
 
+  functionDeclaration(): ASTNode {
+    const nameToken = this.consume(TokenType.IDENTIFIER, "মামা, 'kaam' এর পরে ফাংশনের একটা সুন্দর নাম দেও!");
+    this.consume(TokenType.LPAREN, "মামা, প্যারামিটার লিস্ট '(' ব্র্যাকেট দিয়া শুরু করো!");
+    const params: string[] = [];
+    if (!this.check(TokenType.RPAREN)) {
+      do {
+        const paramToken = this.consume(TokenType.IDENTIFIER, "মামা, প্যারামিটারের সঠিক নাম দেও!");
+        params.push(paramToken.value);
+      } while (this.match(TokenType.COMMA));
+    }
+    this.consume(TokenType.RPAREN, "মামা, প্যারামিটার লিস্ট ')' ব্র্যাকেট দিয়া বন্ধ করো!");
+    const body = this.blockStatement();
+    return {
+      type: 'FunctionDeclaration',
+      name: nameToken.value,
+      params: params,
+      body: body,
+      line: nameToken.line
+    };
+  }
+
+  returnStatement(): ASTNode {
+    let argument: ASTNode | null = null;
+    if (!this.check(TokenType.SEMICOLON)) {
+      argument = this.expression();
+    }
+    this.consumeSemicolon("মামা, 'ferot' স্টেটমেন্টের শেষে সেমিকোলন (;) কই?!");
+    return {
+      type: 'ReturnStatement',
+      argument: argument
+    };
+  }
+
+  breakStatement(): ASTNode {
+    this.consumeSemicolon("মামা, 'thamo' স্টেটমেন্টের শেষে সেমিকোলন (;) কই?!");
+    return { type: 'BreakStatement' };
+  }
+
+  continueStatement(): ASTNode {
+    this.consumeSemicolon("মামা, 'chalao' স্টেটমেন্টের শেষে সেমিকোলন (;) কই?!");
+    return { type: 'ContinueStatement' };
+  }
+
   varDeclaration(): ASTNode {
     const nameToken = this.consume(TokenType.IDENTIFIER, "মামা, 'rakh' এর পরে ভ্যারিয়েবলের একটা সুন্দর নাম দেও!");
     let init: ASTNode | null = null;
@@ -98,7 +170,7 @@ export class Parser {
       init = this.expression();
     }
 
-    this.consume(TokenType.SEMICOLON, "আরে মামা! ভ্যারিয়েবল ডিক্লেয়ারেশনের পরে সেমিকোলন (;) কই ফালাইলা?!");
+    this.consumeSemicolon("আরে মামা! ভ্যারিয়েবল ডিক্লেয়ারেশনের পরে সেমিকোলন (;) কই ফালাইলা?!");
     return {
       type: 'VariableDeclaration',
       identifier: nameToken.value,
@@ -109,7 +181,7 @@ export class Parser {
 
   printStatement(): ASTNode {
     const expr = this.expression();
-    this.consume(TokenType.SEMICOLON, "মামা, 'chilla' স্টেটমেন্টের পরে সেমিকোলন (;) দিতে ভুইলা গেসো!");
+    this.consumeSemicolon("মামা, 'chilla' স্টেটমেন্টের পরে সেমিকোলন (;) দিতে ভুইলা গেসো!");
     return {
       type: 'PrintStatement',
       expression: expr
@@ -170,22 +242,31 @@ export class Parser {
   }
 
   expressionOrAssignmentStatement(): ASTNode {
-    // Check if assignment: variable = expression;
-    if (this.check(TokenType.IDENTIFIER) && this.peek(1).type === TokenType.ASSIGN) {
-      const idToken = this.advance();
-      this.advance(); // consume '='
-      const value = this.expression();
-      this.consume(TokenType.SEMICOLON, "মামা, অ্যাসাইনমেন্টের শেষে সেমিকোলন (;) কই?!");
-      return {
-        type: 'AssignmentStatement',
-        identifier: idToken.value,
-        value: value,
-        line: idToken.line
-      };
+    const expr = this.expression();
+
+    if (this.match(TokenType.ASSIGN)) {
+      const val = this.expression();
+      this.consumeSemicolon("মামা, অ্যাসাইনমেন্টের শেষে সেমিকোলন (;) কই?!");
+      if (expr.type === 'Identifier') {
+        return {
+          type: 'AssignmentStatement',
+          identifier: expr.name,
+          value: val,
+          line: expr.line || 1
+        };
+      }
+      if (expr.type === 'MemberExpression') {
+        return {
+          type: 'MemberAssignmentStatement',
+          object: expr.object,
+          property: expr.property,
+          value: val
+        };
+      }
+      throw new Error(`[Syntax Error] মামা, অ্যাসাইনমেন্টের টার্গেট সঠিক না!`);
     }
 
-    const expr = this.expression();
-    this.consume(TokenType.SEMICOLON, "মামা, স্টেটমেন্টের শেষে সেমিকোলন (;) দেওয়া বাধ্যতামূলক!");
+    this.consumeSemicolon("মামা, স্টেটমেন্টের শেষে সেমিকোলন (;) দেওয়া বাধ্যতামূলক!");
     return {
       type: 'ExpressionStatement',
       expression: expr
@@ -218,16 +299,16 @@ export class Parser {
   }
 
   equality(): ASTNode {
-    let left = this.comparison();
+    let left = this.relational();
     while (this.match(TokenType.EQ, TokenType.NEQ)) {
       const op = this.tokens[this.cursor - 1].value;
-      const right = this.comparison();
+      const right = this.relational();
       left = { type: 'BinaryExpression', operator: op, left, right };
     }
     return left;
   }
 
-  comparison(): ASTNode {
+  relational(): ASTNode {
     let left = this.additive();
     while (this.match(TokenType.LT, TokenType.LTE, TokenType.GT, TokenType.GTE)) {
       const op = this.tokens[this.cursor - 1].value;
@@ -282,16 +363,45 @@ export class Parser {
     if (this.match(TokenType.NULL)) {
       return { type: 'Literal', value: null, raw: 'null' };
     }
+    if (this.match(TokenType.LBRACKET)) {
+      const elements: ASTNode[] = [];
+      if (!this.check(TokenType.RBRACKET)) {
+        do {
+          elements.push(this.expression());
+        } while (this.match(TokenType.COMMA));
+      }
+      this.consume(TokenType.RBRACKET, "মামা, array ']' bracket diya bondho koro!");
+      return { type: 'ArrayLiteral', elements };
+    }
     if (this.match(TokenType.IDENTIFIER)) {
-      return { type: 'Identifier', name: this.tokens[this.cursor - 1].value };
+      let expr: ASTNode = { type: 'Identifier', name: this.tokens[this.cursor - 1].value, line: this.tokens[this.cursor - 1].line };
+      while (true) {
+        if (this.match(TokenType.LPAREN)) {
+          const args: ASTNode[] = [];
+          if (!this.check(TokenType.RPAREN)) {
+            do {
+              args.push(this.expression());
+            } while (this.match(TokenType.COMMA));
+          }
+          this.consume(TokenType.RPAREN, "মামা, function call এর পরে ')' bracket বন্ধ করো!");
+          expr = { type: 'CallExpression', callee: expr, arguments: args };
+        } else if (this.match(TokenType.LBRACKET)) {
+          const index = this.expression();
+          this.consume(TokenType.RBRACKET, "মামা, array index এর পরে ']' bracket বন্ধ করো!");
+          expr = { type: 'MemberExpression', object: expr, property: index };
+        } else {
+          break;
+        }
+      }
+      return expr;
     }
     if (this.match(TokenType.LPAREN)) {
       const expr = this.expression();
-      this.consume(TokenType.RPAREN, "মামা, ব্র্যাকেট '(' খুললে ')' দিয়া বন্ধ করতে হইবো!");
+      this.consume(TokenType.RPAREN, "মামা, '(' bracket দিলে ')' দিয়া বন্ধ করতে হবে!");
       return expr;
     }
 
     const t = this.peek();
-    throw new Error(`[Syntax Error] আরে মামা! '${t.value}' টোকেনটা এখানে কি করতাছে?! (Line ${t.line}, Col ${t.column})`);
+    throw new Error(`[Syntax Error] আরে মামা! Unexpected token '${t.value}' at Line ${t.line}, Col ${t.column}`);
   }
 }

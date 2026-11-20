@@ -38,6 +38,55 @@ export class Transpiler {
         return lines.join('\n');
       }
 
+      case 'FunctionDeclaration': {
+        const indent = this.getIndent(level);
+        const params = (node.params || []).join(', ');
+        return `${indent}function ${node.name}(${params}) ${this.transpile(node.body, level)}`;
+      }
+
+      case 'ReturnStatement': {
+        const indent = this.getIndent(level);
+        if (node.argument) {
+          return `${indent}return ${this.transpile(node.argument, 0)};`;
+        }
+        return `${indent}return;`;
+      }
+
+      case 'BreakStatement': {
+        const indent = this.getIndent(level);
+        return `${indent}break;`;
+      }
+
+      case 'ContinueStatement': {
+        const indent = this.getIndent(level);
+        return `${indent}continue;`;
+      }
+
+      case 'CallExpression': {
+        const callee = this.transpile(node.callee, 0);
+        const args = (node.arguments || []).map((a: ASTNode) => this.transpile(a, 0)).join(', ');
+        return `${callee}(${args})`;
+      }
+
+      case 'ArrayLiteral': {
+        const elems = (node.elements || []).map((e: ASTNode) => this.transpile(e, 0)).join(', ');
+        return `[${elems}]`;
+      }
+
+      case 'MemberExpression': {
+        const obj = this.transpile(node.object, 0);
+        const prop = this.transpile(node.property, 0);
+        return `${obj}[${prop}]`;
+      }
+
+      case 'MemberAssignmentStatement': {
+        const indent = this.getIndent(level);
+        const obj = this.transpile(node.object, 0);
+        const prop = this.transpile(node.property, 0);
+        const val = this.transpile(node.value, 0);
+        return `${indent}${obj}[${prop}] = ${val};`;
+      }
+
       case 'VariableDeclaration': {
         const indent = this.getIndent(level);
         if (node.init) {
@@ -104,29 +153,32 @@ export class Transpiler {
         return `(${left} ${op} ${right})`;
       }
 
+      case 'LogicalExpression': {
+        const left = this.transpile(node.left, 0);
+        const right = this.transpile(node.right, 0);
+        return `(${left} ${node.operator} ${right})`;
+      }
+
       case 'UnaryExpression': {
         let op = node.operator;
         if (op === 'nah') op = '!';
         const arg = this.transpile(node.argument, 0);
-        return `${op}${arg}`;
+        return `${op}(${arg})`;
       }
 
       case 'Literal': {
         if (typeof node.value === 'string') {
           return JSON.stringify(node.value);
         }
-        if (node.value === null) {
-          return 'null';
-        }
+        if (node.value === null) return 'null';
         return String(node.value);
       }
 
-      case 'Identifier': {
+      case 'Identifier':
         return node.name;
-      }
 
       default:
-        return `/* Unknown AST Node: ${node.type} */`;
+        return `/* Unknown node: ${node.type} */`;
     }
   }
 }

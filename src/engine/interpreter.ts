@@ -5,6 +5,16 @@
 
 import { ASTNode } from './parser';
 
+export class ReturnSignal {
+  value: any;
+  constructor(value: any) {
+    this.value = value;
+  }
+}
+
+export class BreakSignal {}
+export class ContinueSignal {}
+
 export class Environment {
   parent: Environment | null;
   records: Map<string, any>;
@@ -57,29 +67,44 @@ export class Interpreter {
       case 'Program':
         return this.evalProgram(node, env);
 
-      case 'VariableDeclaration':
+      case 'VariableDeclaration': {
         const val = node.init ? this.evaluate(node.init, env) : null;
         return env.define(node.identifier, val);
+      }
 
-      case 'AssignmentStatement':
+      case 'AssignmentStatement': {
         const assignVal = this.evaluate(node.value, env);
         return env.assign(node.identifier, assignVal);
+      }
 
-      case 'PrintStatement':
+      case 'MemberAssignmentStatement': {
+        const obj = this.evaluate(node.object, env);
+        const prop = this.evaluate(node.property, env);
+        const val = this.evaluate(node.value, env);
+        if (Array.isArray(obj)) {
+          obj[prop] = val;
+          return val;
+        }
+        throw new Error(`[Runtime Error] মামা, অ্যারে ছাড়া ইনডেক্সে ভ্যালু অ্যাসাইন করা যাইবো না!`);
+      }
+
+      case 'PrintStatement': {
         const printVal = this.evaluate(node.expression, env);
         this.output(this.formatOutput(printVal));
         return printVal;
+      }
 
-      case 'IfStatement':
+      case 'IfStatement': {
         const condition = this.evaluate(node.test, env);
         if (this.isTruthy(condition)) {
-          return this.evaluate(node.consequent, new Environment(env));
+          return this.evalBlockOrStatement(node.consequent, new Environment(env));
         } else if (node.alternate) {
-          return this.evaluate(node.alternate, new Environment(env));
+          return this.evalBlockOrStatement(node.alternate, new Environment(env));
         }
         return null;
+      }
 
-      case 'WhileStatement':
+      case 'WhileStatement': {
         let result = null;
         const loopLimit = 100000; // guard against infinite loops
         let count = 0;
@@ -87,22 +112,81 @@ export class Interpreter {
           if (++count > loopLimit) {
             throw new Error("[Runtime Error] আরে মামা! ইনফিনিট লুপ মারছো কেন?! চক্কর থামায়ে কন্ডিশন ঠিক করো!");
           }
-          result = this.evaluate(node.body, new Environment(env));
+          try {
+            result = this.evalBlockOrStatement(node.body, new Environment(env));
+          } catch (sig) {
+            if (sig instanceof BreakSignal) {
+              break;
+            }
+            if (sig instanceof ContinueSignal) {
+              continue;
+            }
+            throw sig;
+          }
         }
         return result;
+      }
 
       case 'BlockStatement':
-        const blockEnv = new Environment(env);
-        let blockResult = null;
-        for (const stmt of node.body) {
-          blockResult = this.evaluate(stmt, blockEnv);
+        return this.evalBlock(node.body, new Environment(env));
+
+      case 'FunctionDeclaration': {
+        const fn = (...args: any[]) => {
+          const fnEnv = new Environment(env);
+          (node.params || []).forEach((param: string, i: number) => {
+            fnEnv.define(param, args[i] !== undefined ? args[i] : null);
+          });
+          try {
+            this.evalBlock(node.body.body || node.body, fnEnv);
+          } catch (sig) {
+            if (sig instanceof ReturnSignal) {
+              return sig.value;
+            }
+            throw sig;
+          }
+          return null;
+        };
+        return env.define(node.name, fn);
+      }
+
+      case 'ReturnStatement': {
+        const val = node.argument ? this.evaluate(node.argument, env) : null;
+        throw new ReturnSignal(val);
+      }
+
+      case 'BreakStatement':
+        throw new BreakSignal();
+
+      case 'ContinueStatement':
+        throw new ContinueSignal();
+
+      case 'CallExpression': {
+        const callee = this.evaluate(node.callee, env);
+        if (typeof callee !== 'function') {
+          throw new Error(`[Runtime Error] মামা, '${node.callee.name || 'expression'}' তো কোনো ফাংশন না! কল করলা কেমনে?!`);
         }
-        return blockResult;
+        const args = (node.arguments || []).map((a: ASTNode) => this.evaluate(a, env));
+        return callee(...args);
+      }
+
+      case 'ArrayLiteral': {
+        return (node.elements || []).map((elem: ASTNode) => this.evaluate(elem, env));
+      }
+
+      case 'MemberExpression': {
+        const obj = this.evaluate(node.object, env);
+        const prop = this.evaluate(node.property, env);
+        if (obj === null || obj === undefined) {
+          throw new Error(`[Runtime Error] মামা, নাল বা আনডিফাইন্ড থেকে ইনডেক্স পড়া যাইবো না!`);
+        }
+        return obj[prop];
+      }
 
       case 'ExpressionStatement':
         return this.evaluate(node.expression, env);
 
       case 'BinaryExpression':
+      case 'LogicalExpression':
         return this.evalBinary(node, env);
 
       case 'UnaryExpression':
@@ -117,6 +201,21 @@ export class Interpreter {
       default:
         throw new Error(`[Interpreter Error] মামা! অচেনা AST Node: ${node.type}`);
     }
+  }
+
+  evalBlockOrStatement(node: ASTNode, env: Environment): any {
+    if (node.type === 'BlockStatement') {
+      return this.evalBlock(node.body, env);
+    }
+    return this.evaluate(node, env);
+  }
+
+  evalBlock(statements: ASTNode[], env: Environment): any {
+    let result = null;
+    for (const stmt of statements) {
+      result = this.evaluate(stmt, env);
+    }
+    return result;
   }
 
   evalProgram(programNode: ASTNode, env: Environment): any {
@@ -176,6 +275,9 @@ export class Interpreter {
     if (val === true) return 'asli (true)';
     if (val === false) return 'fapor (false)';
     if (val === null) return 'khali (null)';
+    if (Array.isArray(val)) {
+      return '[' + val.map(item => typeof item === 'string' ? `"${item}"` : this.formatOutput(item)).join(', ') + ']';
+    }
     return String(val);
   }
 }

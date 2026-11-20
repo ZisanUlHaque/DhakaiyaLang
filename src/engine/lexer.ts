@@ -14,6 +14,10 @@ export const TokenType = {
   IF: 'IF',                       // jodi
   ELSE: 'ELSE',                   // naile
   WHILE: 'WHILE',                 // chakkor
+  FUNCTION: 'FUNCTION',           // kaam
+  RETURN: 'RETURN',               // ferot
+  BREAK: 'BREAK',                 // thamo
+  CONTINUE: 'CONTINUE',           // chalao
   TRUE: 'TRUE',                   // asli
   FALSE: 'FALSE',                 // fapor
   NULL: 'NULL',                   // khali
@@ -49,6 +53,8 @@ export const TokenType = {
   RPAREN: ')',
   LBRACE: '{',
   RBRACE: '}',
+  LBRACKET: '[',
+  RBRACKET: ']',
   SEMICOLON: ';',
   COMMA: ',',
 
@@ -65,6 +71,10 @@ export const KEYWORDS: Record<string, TokenType> = {
   'jodi': TokenType.IF,
   'naile': TokenType.ELSE,
   'chakkor': TokenType.WHILE,
+  'kaam': TokenType.FUNCTION,
+  'ferot': TokenType.RETURN,
+  'thamo': TokenType.BREAK,
+  'chalao': TokenType.CONTINUE,
   'asli': TokenType.TRUE,
   'fapor': TokenType.FALSE,
   'khali': TokenType.NULL,
@@ -246,6 +256,14 @@ export class Lexer {
         case '}':
           this.advance();
           tokens.push(new Token(TokenType.RBRACE, '}', startLine, startCol));
+          break;
+        case '[':
+          this.advance();
+          tokens.push(new Token(TokenType.LBRACKET, '[', startLine, startCol));
+          break;
+        case ']':
+          this.advance();
+          tokens.push(new Token(TokenType.RBRACKET, ']', startLine, startCol));
           break;
         case ';':
           this.advance();

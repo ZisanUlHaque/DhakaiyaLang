@@ -49,6 +49,23 @@ class Parser {
     throw new Error(`[Syntax Error] ${errorMessage} (Paisi '${token.value}' at Line ${token.line}, Col ${token.column})`);
   }
 
+  consumeSemicolon(errorMessage) {
+    if (this.match(TokenType.SEMICOLON)) {
+      return;
+    }
+    const prev = this.tokens[this.cursor - 1];
+    const current = this.peek();
+    if (
+      current.type === TokenType.PROGRAM_END ||
+      current.type === TokenType.RBRACE ||
+      current.type === TokenType.EOF ||
+      (prev && current && current.line > prev.line)
+    ) {
+      return;
+    }
+    throw new Error(`[Syntax Error] ${errorMessage} (Paisi '${current.value}' at Line ${current.line}, Col ${current.column})`);
+  }
+
   parse() {
     this.consume(TokenType.PROGRAM_START, "Mama, program to 'bismillah' diya shuru korte hobe!");
 
@@ -121,7 +138,7 @@ class Parser {
     if (!this.check(TokenType.SEMICOLON)) {
       argument = this.expression();
     }
-    this.consume(TokenType.SEMICOLON, "Mama, 'ferot' statement er sheshe semicolon (;) কই?");
+    this.consumeSemicolon("Mama, 'ferot' statement er sheshe semicolon (;) কই?");
     return {
       type: 'ReturnStatement',
       argument: argument
@@ -129,12 +146,12 @@ class Parser {
   }
 
   breakStatement() {
-    this.consume(TokenType.SEMICOLON, "Mama, 'thamo' statement er sheshe semicolon (;) কই?");
+    this.consumeSemicolon("Mama, 'thamo' statement er sheshe semicolon (;) কই?");
     return { type: 'BreakStatement' };
   }
 
   continueStatement() {
-    this.consume(TokenType.SEMICOLON, "Mama, 'chalao' statement er sheshe semicolon (;) কই?");
+    this.consumeSemicolon("Mama, 'chalao' statement er sheshe semicolon (;) কই?");
     return { type: 'ContinueStatement' };
   }
 
@@ -146,7 +163,7 @@ class Parser {
       init = this.expression();
     }
 
-    this.consume(TokenType.SEMICOLON, "Mama, line sheshe semicolon (;) কই?");
+    this.consumeSemicolon("Mama, line sheshe semicolon (;) কই?");
     return {
       type: 'VariableDeclaration',
       identifier: nameToken.value,
@@ -157,7 +174,7 @@ class Parser {
 
   printStatement() {
     const expr = this.expression();
-    this.consume(TokenType.SEMICOLON, "Mama, 'chilla' statement er pore semicolon (;) koi?");
+    this.consumeSemicolon("Mama, 'chilla' statement er pore semicolon (;) koi?");
     return {
       type: 'PrintStatement',
       expression: expr
@@ -223,7 +240,7 @@ class Parser {
       const idToken = this.advance();
       this.advance(); // consume '='
       const value = this.expression();
-      this.consume(TokenType.SEMICOLON, "Mama, assignment er pore semicolon (;) koi?");
+      this.consumeSemicolon("Mama, assignment er pore semicolon (;) koi?");
       return {
         type: 'AssignmentStatement',
         identifier: idToken.value,
@@ -233,7 +250,7 @@ class Parser {
     }
 
     const expr = this.expression();
-    this.consume(TokenType.SEMICOLON, "Mama, statement er pore semicolon (;) dite hobe!");
+    this.consumeSemicolon("Mama, statement er pore semicolon (;) dite hobe!");
     return {
       type: 'ExpressionStatement',
       expression: expr
