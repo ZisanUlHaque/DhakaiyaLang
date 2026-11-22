@@ -823,7 +823,9 @@ export default function Home() {
               <span className="text-slate-600">CSE 3202: Compiler Design Sessional</span>
             </div>
             <div>
-              <span className="text-slate-600 font-medium">Bhailang ও BongLang আদলে পিওর জাভাস্ক্রিপ্ট ইঞ্জিন • Made with ❤️ in Old Dhaka</span>
+<span className="text-slate-600 font-medium">
+  Coded with <span className="text-indigo-600 font-bold">&lt;/&gt;</span> by Zisan
+</span>
             </div>
           </div>
         </footer>
