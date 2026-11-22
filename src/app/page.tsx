@@ -209,7 +209,7 @@ export default function Home() {
               <span>📟 টার্মিনাল ও এডিটর</span>
             </a>
             <a href="#docs" className="text-[#94A3B8] hover:text-white transition-colors flex items-center gap-1.5">
-              <span>📖 ডকুমেন্টেশন (Bhailang স্টাইল)</span>
+              <span>📖 ডকুমেন্টেশন</span>
             </a>
           </nav>
 
