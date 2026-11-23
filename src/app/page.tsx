@@ -193,9 +193,6 @@ export default function Home() {
                 <span className="font-black text-xl tracking-tight bg-gradient-to-r from-[#FFD700] via-[#F59E0B] to-[#FF5722] bg-clip-text text-transparent font-mono">
                   DhakaiyaLang
                 </span>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#D94819]/20 text-[#FF5722] border border-[#D94819]/40 font-mono">
-                  পুরান ঢাকা v1.0
-                </span>
               </div>
             </div>
           </a>

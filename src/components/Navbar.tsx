@@ -38,9 +38,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span className="font-extrabold text-lg tracking-tight bg-gradient-to-r from-white via-dhaka-gold to-dhaka-terracotta bg-clip-text text-transparent font-mono">
                 DhakaiyaLang
               </span>
-              <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-dhaka-terracotta/20 text-dhaka-terracottaLight border border-dhaka-terracotta/40">
-                পুরান ঢাকা v1.0
-              </span>
+
             </div>
             <p className="text-xs text-dhaka-textMuted hidden sm:block">
               Compiler Design Lab • Pure JS AST Engine
