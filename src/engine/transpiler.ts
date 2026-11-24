@@ -20,6 +20,10 @@ export class Transpiler {
   transpile(node: ASTNode | null, level = 0): string {
     if (!node) return '';
 
+    if (Array.isArray(node)) {
+      return (node as ASTNode[]).map((s: ASTNode) => this.transpile(s, level)).join('\n');
+    }
+
     switch (node.type) {
       case 'Program': {
         const lines = [
@@ -41,7 +45,9 @@ export class Transpiler {
       case 'FunctionDeclaration': {
         const indent = this.getIndent(level);
         const params = (node.params || []).join(', ');
-        return `${indent}function ${node.name}(${params}) ${this.transpile(node.body, level)}`;
+        const bodyStmts = Array.isArray(node.body) ? node.body : (node.body?.body || []);
+        const stmts = bodyStmts.map((s: ASTNode) => this.transpile(s, level + 1)).join('\n');
+        return `${indent}function ${node.name}(${params}) {\n${stmts}\n${indent}}`;
       }
 
       case 'ReturnStatement': {

@@ -66,6 +66,17 @@ class Interpreter {
         const assignVal = this.evaluate(node.value, env);
         return env.assign(node.identifier, assignVal);
 
+      case 'MemberAssignmentStatement': {
+        const obj = this.evaluate(node.object, env);
+        const prop = this.evaluate(node.property, env);
+        const val = this.evaluate(node.value, env);
+        if (Array.isArray(obj)) {
+          obj[prop] = val;
+          return val;
+        }
+        throw new Error(`[Runtime Error] মামা, অ্যারে ছাড়া ইনডেক্সে ভ্যালু অ্যাসাইন করা যাইবো না!`);
+      }
+
       case 'PrintStatement':
         const printVal = this.evaluate(node.expression, env);
         this.output(this.formatOutput(printVal));

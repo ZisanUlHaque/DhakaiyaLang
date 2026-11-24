@@ -16,6 +16,10 @@ class Transpiler {
   transpile(node, level = 0) {
     if (!node) return '';
 
+    if (Array.isArray(node)) {
+      return node.map(s => this.transpile(s, level)).join('\n');
+    }
+
     switch (node.type) {
       case 'Program': {
         const lines = [
@@ -33,8 +37,10 @@ class Transpiler {
 
       case 'FunctionDeclaration': {
         const indent = this.getIndent(level);
-        const params = node.params.join(', ');
-        return `${indent}function ${node.name}(${params}) ${this.transpile(node.body, level)}`;
+        const params = (node.params || []).join(', ');
+        const bodyStmts = Array.isArray(node.body) ? node.body : (node.body?.body || []);
+        const stmts = bodyStmts.map(s => this.transpile(s, level + 1)).join('\n');
+        return `${indent}function ${node.name}(${params}) {\n${stmts}\n${indent}}`;
       }
 
       case 'ReturnStatement': {
@@ -83,6 +89,14 @@ class Transpiler {
       case 'AssignmentStatement': {
         const indent = this.getIndent(level);
         return `${indent}${node.identifier} = ${this.transpile(node.value, 0)};`;
+      }
+
+      case 'MemberAssignmentStatement': {
+        const indent = this.getIndent(level);
+        const obj = this.transpile(node.object, 0);
+        const prop = this.transpile(node.property, 0);
+        const val = this.transpile(node.value, 0);
+        return `${indent}${obj}[${prop}] = ${val};`;
       }
 
       case 'PrintStatement': {

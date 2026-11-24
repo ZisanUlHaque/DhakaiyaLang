@@ -235,21 +235,30 @@ class Parser {
   }
 
   expressionOrAssignmentStatement() {
-    // Check if it's an assignment: variable = expression;
-    if (this.check(TokenType.IDENTIFIER) && this.peek(1).type === TokenType.ASSIGN) {
-      const idToken = this.advance();
-      this.advance(); // consume '='
-      const value = this.expression();
+    const expr = this.expression();
+
+    if (this.match(TokenType.ASSIGN)) {
+      const val = this.expression();
       this.consumeSemicolon("Mama, assignment er pore semicolon (;) koi?");
-      return {
-        type: 'AssignmentStatement',
-        identifier: idToken.value,
-        value: value,
-        line: idToken.line
-      };
+      if (expr.type === 'Identifier') {
+        return {
+          type: 'AssignmentStatement',
+          identifier: expr.name,
+          value: val,
+          line: expr.line || 1
+        };
+      }
+      if (expr.type === 'MemberExpression') {
+        return {
+          type: 'MemberAssignmentStatement',
+          object: expr.object,
+          property: expr.property,
+          value: val
+        };
+      }
+      throw new Error(`[Syntax Error] Mama, invalid assignment target!`);
     }
 
-    const expr = this.expression();
     this.consumeSemicolon("Mama, statement er pore semicolon (;) dite hobe!");
     return {
       type: 'ExpressionStatement',

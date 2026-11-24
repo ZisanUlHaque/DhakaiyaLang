@@ -11,6 +11,92 @@ export interface Preset {
 
 export const PRESETS: Preset[] = [
   {
+    id: 'grand_master',
+    name: '🛺 গ্র্যান্ড মাস্টার প্রোগ্রাম (সব ফিচার একসাথে)',
+    description: 'ভ্যারিয়েবল, ফাংশন, অ্যারে, লুপ, ব্রেক/কন্টিনিউ ও কন্ডিশনাল লজিক',
+    code: `bismillah
+  // ==========================================
+  // 🛺 পুরান ঢাকার গ্র্যান্ড মাস্টার প্রোগ্রাম
+  // DhakaiyaLang All-Features Showcase
+  // ==========================================
+
+  // ১. ভ্যারিয়েবল ডিক্লেয়ারেশন (rakh) ও ডেটা টাইপস
+  rakh dokan = "হাজী নান্না বিরিয়ানি";
+  rakh plate = 3;
+  rakh dam = 280;
+  rakh discountAche = asli;
+  rakh VIP_Guest = fapor;
+  rakh tip = khali;
+  rakh menu = ["কাচ্চি", "মোরগ পোলাও", "বোরহানি", "জর্দা"];
+
+  chilla "=== ১. ভ্যারিয়েবল ও অ্যারে এক্সেস ===";
+  chilla dokan;
+  chilla menu[0];
+
+  // অ্যারের ইনডেক্স রি-অ্যাসাইন
+  menu[1] = "খাসির তেহারি";
+  chilla menu[1];
+
+  // ২. ফাংশন (kaam) ও রিটার্ন (ferot)
+  kaam hishabKoro(p, d, discount) {
+    rakh mot = p * d;
+    jodi (discount == asli) {
+      mot = mot - 100;
+    }
+    ferot mot;
+  }
+
+  rakh totalBill = hishabKoro(plate, dam, discountAche);
+  chilla "=== ২. ফাংশন কল ও রিটার্ন মান ===";
+  chilla totalBill;
+
+  // ৩. গাণিতিক (+, -, *, /, %) ও ইউনারি (-, nah) অপারেটরস
+  rakh vat = (totalBill * 5) / 100;
+  rakh modValue = totalBill % 50;
+  rakh ultaMan = -50;
+  rakh openAche = nah VIP_Guest;
+
+  chilla "=== ৩. গাণিতিক ও ইউনারি অপারেটরস ===";
+  chilla vat;
+  chilla modValue;
+  chilla ultaMan;
+  chilla openAche;
+
+  // ৪. শর্তাধীন স্টেটমেন্ট (jodi, naile) ও লজিক্যাল (ebong, othoba)
+  chilla "=== ৪. শর্তাধীন স্টেটমেন্ট (jodi, naile) ===";
+  jodi (totalBill > 1000 ebong plate >= 3) {
+    chilla "মামারে স্পেশাল বোরহানি ফ্রি দাও!";
+  } naile jodi (totalBill > 500 othoba plate == 3) {
+    chilla "মামা এক কাপ স্পেশাল জর্দা ফ্রি পাইবা!";
+  } naile {
+    chilla "পরের বার বেশি খাইলে অফার পাইবা মামা!";
+  }
+
+  // ৫. লুপ (chakkor) এর সাথে ব্রেক (thamo) এবং কন্টিনিউ (chalao)
+  chilla "=== ৫. লুপ (chakkor), thamo ও chalao ===";
+  rakh gunti = 0;
+  chakkor (gunti < 6) {
+    gunti = gunti + 1;
+
+    // ৩ নাম্বার চক্বর স্কিপ করবো (chalao)
+    jodi (gunti == 3) {
+      chilla "৩ নাম্বার চক্বর স্কিপ করা হইলো!";
+      chalao;
+    }
+
+    // ৫ নাম্বার চক্বরে লুপ থামাবো (thamo)
+    jodi (gunti == 5) {
+      chilla "৫ নম্বরে আইসা লুপ থামায়ে দিলাম!";
+      thamo;
+    }
+
+    chilla gunti;
+  }
+
+  chilla "=== আলহামদুলিল্লাহ! সব ফিচার সফলভাবে রান হইছে! ===";
+khatam`
+  },
+  {
     id: 'kacchi',
     name: '🍛 হাজী কাচ্চির বিল হিসাব (Variables & Math)',
     description: 'হিসাব-নিকাশ এবং ভ্যারিয়েবল ডিক্লেয়ারেশন',
